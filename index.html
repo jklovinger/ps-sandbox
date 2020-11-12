@@ -75,40 +75,27 @@ if (randNum < 25) {
 } else {
     visitor = 'visitor2@' + accString + '.com';
     role = 'read-only';
-}</script><script>!function(e,n,t,a,i){var c,o,d,s,p;for((i=e[a]=e[a]||{})._q=[],o=0,d=(c=["initialize","identify","updateOptions","pageLoad"]).length;o<d;++o)!function(e){i[e]=i[e]||function(){i._q[e===c[0]?"unshift":"push"]([e].concat([].slice.call(arguments,0)))}}(c[o]);(s=n.createElement(t)).async=!0,s.src="https://cdn.pendo.io/agent/static/9703343b-1bba-4db6-799d-6637c3ff0aa8/pendo.js",(p=n.getElementsByTagName(t)[0]).parentNode.insertBefore(s,p)}(window,document,"script","pendo")</script><script>// Call this whenever information about your visitors becomes available
-        // Please use Strings, Numbers, or Bools for value types.
-        pendo.initialize({
-            visitor: {
-              id:       visitorParam || visitor || 'VISITOR-UNIQUE-ID',
-              role:     role || 'user'
-            },
-         
-            account: {
-              id:       accountParam || account_id
-            },
-
-            events: {
-              ready: function () {
-              pendo.addBodyMutationListener();
-            }
-          }
-        });
-
+}</script><script>!function(e,n,t,a,i){var c,o,d,s,p;for((i=e[a]=e[a]||{})._q=[],o=0,d=(c=["initialize","identify","updateOptions","pageLoad"]).length;o<d;++o)!function(e){i[e]=i[e]||function(){i._q[e===c[0]?"unshift":"push"]([e].concat([].slice.call(arguments,0)))}}(c[o]);(s=n.createElement(t)).async=!0,s.src="https://cdn.pendo.io/agent/static/9703343b-1bba-4db6-799d-6637c3ff0aa8/pendo.js",(p=n.getElementsByTagName(t)[0]).parentNode.insertBefore(s,p)}(window,document,"script","pendo")</script><script>// This will add a type attribute of image for any image badges
+        // Additionally, it will:
+        //  1) If the badge is the RC, add the alt-text "Resource Center"
+        //  2) If the badge has a string in the guide name within #[ ], then make the
+        //     alt-text that string
+        //  3) Otherwise, just default the alt-text to "tooltip badge"
         pendo.addAltText = function(guideId) {
           var badgeId = pendo.badgesShown[guideId].domJson.children[1].props.id;
           if (pendo.dom("#"+badgeId+ " img")[0]) {
-            pendo.dom("#"+badgeId+ " img")[0].setAttribute('aria-role', 'tooltip');
+            pendo.dom("#"+badgeId+ " img")[0].setAttribute('type', 'image');
             var guideName = pendo.guides.filter(elem=>elem.id==guideId)[0].name;
             if (guideName.includes("#[")) {
               var guideNameAltText = guideName.substring(guideName.indexOf("#[")+2, guideName.indexOf("]"));
             }
 
             if(pendo.guides.filter(elem=>elem.id==guideId)[0].name == "Resource Center") {
-              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt-text', "Resource Center");
+              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt', "Resource Center");
             } else if (guideNameAltText) {
-              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt-text', guideNameAltText);
+              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt', guideNameAltText);
             } else {
-              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt-text', "tooltip badge");
+              pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt', "tooltip badge");
             }
           }
         }
